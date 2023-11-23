@@ -1,14 +1,14 @@
 import React, { useRef, useState } from 'react';
 import Header from './Header';
-import { Form, useNavigate } from 'react-router-dom';
+import { Form } from 'react-router-dom';
 import { formValidate } from '../utils/validate';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase.config';
 import { addUser } from '../utils/userSlice';
 import { useDispatch } from 'react-redux';
+import { LOGO, USER_AVATAR } from '../utils/constant';
 
 const Login = () => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null)
@@ -33,11 +33,10 @@ const Login = () => {
           const user = userCredential.user;
           //update the user with display name and photo
           updateProfile(user, {
-            displayName: name.current.value, photoURL: "https://avatars.githubusercontent.com/u/53507102?v=4"
+            displayName: name.current.value, photoURL: USER_AVATAR
           }).then(() => {
             const { uid, displayName, email, photoURL } = auth.currentUser;
             dispatch(addUser({ uid: uid, displayName: displayName, email: email, photoURL: photoURL }))
-            navigate("/browse")
           }).catch((error) => {
             setErrorMessage(error.message)
           });
@@ -51,11 +50,7 @@ const Login = () => {
     } else {
       //sign In Logic
       signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          navigate("/browse")
-        })
+        .then((userCredential) => { })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
@@ -73,7 +68,7 @@ const Login = () => {
       <div className='absolute bg-gradient-to-b'>
         <img
           className=''
-          src='https://assets.nflxext.com/ffe/siteui/vlv3/a09bb938-2d90-42ae-986e-5a3e4abf9e77/8eb1e781-3494-4aa4-9405-268ca6473e4c/IN-en-20231113-popsignuptwoweeks-perspective_alpha_website_large.jpg'
+          src={LOGO}
           alt='logo'
         />
       </div>
