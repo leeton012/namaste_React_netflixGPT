@@ -27,6 +27,12 @@
 -   update redux store with trailer data
 -   Embedded the youtube video and make it autoplay and mute
 -   Tailwind css added to make mainContainer it cool
+-   Build secondary component
+-   Build Mocvie List
+-   Build Movie card
+-   TMDB Image poster CDN
+-   Make browse page amaszing using Tailwiund css
+-   UsePopular Movies custom hook
 
 # features
 
